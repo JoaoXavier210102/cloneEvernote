@@ -1,8 +1,10 @@
+import React from "react";
+import Home from "./pages/home";
+import Routes from "./Routes";
+import "normalize.css";
+
 function App() {
-  return (
-    <>
-    </>
-  );
+  return <Routes/>;
 }
 
 export default App;
