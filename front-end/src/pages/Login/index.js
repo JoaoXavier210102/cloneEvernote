@@ -12,6 +12,10 @@ import Input from "../../components/Input";
 import Tittle from "../../components/Tittle";
 import Form from "../../components/Form";
 
+//Animation
+import FadeIn from "../../components/FadeIn";
+import FadeInDown from "../../components/FadeInDown";
+
 //SVG
 import logo from "../../images/Xnote.svg";
 
@@ -48,22 +52,26 @@ const Login = () => {
     return (
         <>
             <Main>
-                <Header justifyContent="space-around" alignItems="center">
-                    <Link to="/">
-                        <img src={logo} alt="logo" />
-                    </Link>
-                    <Link to="/register">
-                        <Button>Register</Button>
-                    </Link>
-                </Header>
+                <FadeIn>
+                    <Header justifyContent="space-around" alignItems="center">
+                        <Link to="/">
+                            <img src={logo} alt="logo" />
+                        </Link>
+                        <Link to="/register">
+                            <Button>Register</Button>
+                        </Link>
+                    </Header>
+                </FadeIn>
                 <Container display="grid" height="100%" justify="center">
                     <Container>
-                        <Tittle align="center" size={64}>Access account</Tittle>
-                        <Form onSubmit={handleSubmit}>
-                            <Input placeholder="Email" type="email" onChange={(event => setEmail(event.target.value))} />
-                            <Input placeholder="Password" type="password" onChange={(event => setPassword(event.target.value))} />
-                            <Button type="submit" size="medium" justify="center" style={{ marginTop: "20px" }}>Login</Button>
-                        </Form>
+                        <FadeInDown duration="1s">
+                            <Tittle align="center" size={64}>Access account</Tittle>
+                            <Form onSubmit={handleSubmit}>
+                                <Input placeholder="Email" type="email" onChange={(event => setEmail(event.target.value))} />
+                                <Input placeholder="Password" type="password" onChange={(event => setPassword(event.target.value))} />
+                                <Button type="submit" size="medium" justify="center" style={{ marginTop: "20px" }}>Login</Button>
+                            </Form>
+                        </FadeInDown>
                     </Container>
                 </Container>
             </Main>
