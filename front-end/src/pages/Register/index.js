@@ -1,5 +1,7 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
+import api from "../../services/api";
 
 //Components
 import Main from "../../components/Main";
@@ -18,10 +20,51 @@ import FadeInDown from "../../components/FadeInDown";
 import logo from "../../images/Xnote.svg";
 
 const Register = () => {
+
+    const [name, setName] = useState("");
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [confirmPassword, setConfirmPassword] = useState("");
+
+    const navigate = useNavigate();
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+
+        if (!name || !email || !password || !confirmPassword) {
+            Swal.fire({
+                icon: 'warning',
+                title: 'Oops...',
+                text: "Empty fields!"
+            })
+        } else if (password !== confirmPassword) {
+            Swal.fire({
+                icon: 'warning',
+                title: 'Oops...',
+                text: "Passwords don't match!"
+            })
+        } else {
+            api.post("/users/register", { name, email, password }).then((response) => {
+                Swal.fire({
+                    icon: 'success',
+                    title: `Usuário ${response.data.name} criado!`,
+                    text: "Agora faça o login"
+                })
+                navigate("/login")
+            }).catch((error) => {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: error.response.data.message
+                })
+            })
+        }
+    }
+
     return (
         <Main>
             <FadeIn>
-                <Header justifyContent="space-around" alignItems="center">
+                <Header>
                     <Link to="/">
                         <img src={logo} alt="logo" />
                     </Link>
@@ -34,11 +77,11 @@ const Register = () => {
                 <Container>
                     <FadeInDown duration="1s">
                         <Tittle align="center" size={64}>Create your account</Tittle>
-                        <Form>
-                            <Input placeholder="Name" />
-                            <Input placeholder="Email" />
-                            <Input placeholder="Password" />
-                            <Input placeholder="Confirm Password" />
+                        <Form onSubmit={handleSubmit}>
+                            <Input placeholder="Name" type="text" onChange={(event) => setName(event.target.value)} />
+                            <Input placeholder="Email" type="email" onChange={(event) => setEmail(event.target.value)} />
+                            <Input placeholder="Password" type="password" onChange={(event) => setPassword(event.target.value)} />
+                            <Input placeholder="Confirm Password" type="password" onChange={(event) => setConfirmPassword(event.target.value)} />
                             <Button type="submit" size="medium" justify="center" style={{ marginTop: "20px" }}>Register</Button>
                         </Form>
                     </FadeInDown>
