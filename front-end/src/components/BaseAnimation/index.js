@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+
 const BaseAnimation = styled.div`  
   animation-duration: ${props => props.duration};  
   animation-timing-function: ${props => props.timingFunction};      
@@ -9,6 +10,7 @@ const BaseAnimation = styled.div`
   animation-play-state:  ${props => props.playState};  
   display: ${props => props.display};
 `;
+
 BaseAnimation.defaultProps = {  
   duration: '3s',
   timingFunction: 'ease',
@@ -19,4 +21,5 @@ BaseAnimation.defaultProps = {
   playState: 'running',
   display: 'block'
 };
+
 export default BaseAnimation;

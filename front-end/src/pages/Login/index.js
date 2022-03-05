@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Swal from 'sweetalert2'
 import api from "../../services/api";
@@ -41,7 +41,7 @@ const Login = () => {
                 navigate("/app");
             }).catch((error) => {
                 Swal.fire({
-                    icon: 'warning',
+                    icon: 'error',
                     title: 'Oops...',
                     text: error.response.data.message
                 })
@@ -53,7 +53,7 @@ const Login = () => {
         <>
             <Main>
                 <FadeIn>
-                    <Header justifyContent="space-around" alignItems="center">
+                    <Header>
                         <Link to="/">
                             <img src={logo} alt="logo" />
                         </Link>
@@ -66,6 +66,7 @@ const Login = () => {
                     <Container>
                         <FadeInDown duration="1s">
                             <Tittle align="center" size={64}>Access account</Tittle>
+                            
                             <Form onSubmit={handleSubmit}>
                                 <Input placeholder="Email" type="email" onChange={(event => setEmail(event.target.value))} />
                                 <Input placeholder="Password" type="password" onChange={(event => setPassword(event.target.value))} />

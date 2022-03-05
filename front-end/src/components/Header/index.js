@@ -7,7 +7,13 @@ const Header = styled.header`
     padding: 15px 0px 15px;
     max-height: 70px;
     width: 100%;
-    position: fixed;
+    position: ${props => props.position};
 `
+
+Header.defaultProps = {
+    justifyContent: "space-around",
+    alignItems: "center",
+    position: "fixed"
+}
 
 export default Header;
