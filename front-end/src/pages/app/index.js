@@ -1,10 +1,11 @@
-import React, {useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import api from "../../services/api";
 
 //Icons
 import { CgProfile } from "react-icons/cg";
 import { MdLogout } from "react-icons/md";
+import { CgMenuGridR } from "react-icons/cg";
 
 //Components
 import Main from "../../components/Main";
@@ -15,6 +16,7 @@ import Subtittle from "../../components/Subtittle";
 import ListNotes from "../../components/ListNotes";
 import Search from "../../components/Search";
 import Note from "../../components/Note";
+import Floatbutton from "../../components/FloatButton";
 
 //Animation
 import FadeIn from "../../components/FadeIn";
@@ -32,6 +34,7 @@ const App = () => {
     const navigate = useNavigate();
 
     const user = JSON.parse(localStorage.getItem(USER));
+    const [openMenu, setOpenMenu] = useState("-500px")
 
     const logout = () => {
         localStorage.removeItem(TOKEN);
@@ -39,10 +42,15 @@ const App = () => {
         navigate("/");
     }
 
+    const handleSideBar = () => {
+        openMenu === "0px" ? setOpenMenu("-500px") : setOpenMenu("0px");
+    }
+
     return (
         <Main>
             <FadeIn>
                 <Header position="relative">
+                    <Floatbutton> <CgMenuGridR size={30} color="white" onClick={handleSideBar} /> </Floatbutton>
                     <Link to="/">
                         <img src={logo} alt="logo" />
                     </Link>
@@ -55,19 +63,18 @@ const App = () => {
                     </Container>
                 </Header>
             </FadeIn>
-            <FadeInDown>
-                <div>
-                    <Container style={{ width: "500px" }} >
-                        <Container fullWidth display="flex" justify="center">
-                            <Search />
-                        </Container>
-                        <Subtittle size={18} weight={400} style={{ marginLeft: "10px" }}>4 Notes</Subtittle>
-                        <ListNotes>
-                            <Note selected/>
-                        </ListNotes>
-                    </Container>
-                </div>
-            </FadeInDown>
+            <Container style={{ width: "500px", display: "grid", transition: "1s", position: "fixed", left: openMenu }}>
+                <Container fullWidth display="flex" justify="center" style={{ marginBottom: "60px" }}>
+                    <Search />
+                </Container>
+                <Subtittle size={18} weight={400} style={{ marginLeft: "10px" }}>4 Notes</Subtittle>
+                <ListNotes>
+                    <Note/>
+                </ListNotes>
+            </Container>
+            <div style={{ width: "100vw", height: "calc(100vh - 87px)" }}>
+                
+            </div>
         </Main >
     )
 }
