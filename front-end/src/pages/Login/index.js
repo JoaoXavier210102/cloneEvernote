@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Swal from 'sweetalert2'
 import api from "../../services/api";
@@ -20,11 +20,16 @@ import FadeInDown from "../../components/FadeInDown";
 import logo from "../../images/Xnote.svg";
 
 const TOKEN = "@Token-Xnote";
+const USER = "@User-Xnote";
 
 const Login = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const navigate = useNavigate();
+
+    useEffect(() => {
+        localStorage.getItem(TOKEN) && localStorage.getItem(USER) && navigate("/app");
+    }, []);
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -37,6 +42,7 @@ const Login = () => {
             })
         } else {
             api.post("/users/login", { email, password }).then((response) => {
+                localStorage.setItem(USER, JSON.stringify(response.data.user));
                 localStorage.setItem(TOKEN, response.data.token);
                 navigate("/app");
             }).catch((error) => {
