@@ -147,9 +147,9 @@ const App = () => {
 
 
     return (
-        <Main>
+        <Main style={{background: "white"}}>
             <FadeIn>
-                <Header position="relative">
+                <Header position="relative" style={{background: "linear-gradient(116.42deg, #3C1642 23.33%, #086375 83.22%)"}}>
                     <Floatbutton> <CgMenuGridR size={30} color="white" onClick={handleSideBar} /> </Floatbutton>
                     <Link to="/">
                         <img src={logo} alt="logo" />
@@ -163,8 +163,8 @@ const App = () => {
                     </Container>
                 </Header>
             </FadeIn>
-            <FadeInDown>
-                <Container style={{ width: "500px", display: "grid", transition: "1s", position: "fixed", left: openMenu ? "0px" : "-500px" }}>
+            <FadeIn>
+                <Container style={{ width: "500px", display: "grid", transition: "1s", position: "fixed", left: openMenu ? "0px" : "-500px", background: "linear-gradient(0deg, rgba(8,99,117,1) 0%, rgba(60,22,66,1) 100%)" }}>
                     <Container fullWidth display="flex" justify="center" style={{ marginBottom: "60px" }}>
                         <Search />
                     </Container>
@@ -178,8 +178,10 @@ const App = () => {
                         ))}
                     </ListNotes>
                 </Container>
-            </FadeInDown>
-            <ReactQuill modules={modules} theme="snow" value={valueEditor} onChange={setValueEditor} placeholder="Try to type something..." style={{ marginLeft: openMenu ? "500px" : "0px", transition: "1s", background: "white" }} />
+            </FadeIn>
+            <Container>
+                <ReactQuill modules={modules} theme="snow" value={valueEditor} onChange={setValueEditor} placeholder="Try to type something..." style={{ marginLeft: openMenu ? "500px" : "0px", transition: "1s", background: "white", height: "calc(100vh - 128px)" }}/>
+            </Container>
         </Main >
     )
 }

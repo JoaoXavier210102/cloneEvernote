@@ -3,7 +3,7 @@ import json from "../../config/colors.json";
 
 const ListNotes = styled.aside`
     overflow-y: scroll;
-    max-height: calc(100vh - 187px);
+    height: calc(100vh - 246px);
     max-width: 500px;
 
     ::-webkit-scrollbar {

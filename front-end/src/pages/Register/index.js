@@ -19,6 +19,9 @@ import FadeInDown from "../../components/FadeInDown";
 //SVG
 import logo from "../../images/Xnote.svg";
 
+const TOKEN = "@Token-Xnote";
+const USER = "@User-Xnote";
+
 const Register = () => {
 
     const [name, setName] = useState("");
@@ -45,12 +48,9 @@ const Register = () => {
             })
         } else {
             api.post("/users/register", { name, email, password }).then((response) => {
-                Swal.fire({
-                    icon: 'success',
-                    title: `Usuário ${response.data.name} criado!`,
-                    text: "Agora faça o login"
-                })
-                navigate("/login")
+                localStorage.setItem(USER, JSON.stringify(response.data.user));
+                localStorage.setItem(TOKEN, response.data.token);
+                navigate("/app");
             }).catch((error) => {
                 Swal.fire({
                     icon: 'error',
