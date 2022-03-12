@@ -9,6 +9,8 @@ router.post("/register", async (req, res) => {
 
   const { name, email, password } = req.body;
 
+  const secret = process.env.SECRET;
+
   try {
 
     if (await User.findOne({ email })) {
@@ -27,11 +29,13 @@ router.post("/register", async (req, res) => {
         password: hash
       };
 
+      const token = jwt.sign({ email }, secret, { expiresIn: 86400 });
+
       const user = await User.create(userCreate);
 
       user.password = undefined
 
-      res.status(201).json(user);
+      res.status(201).json({user, token});
 
     })
 
