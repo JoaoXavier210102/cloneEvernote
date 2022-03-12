@@ -26,12 +26,12 @@ router.post("/create", withAuth, async (req, res) => {
 //Pesquisa de notas
 router.get("/search", withAuth, async (req, res) => {
 
-    const {query} = req.query;
+    const { query } = req.query;
 
     try {
-        let note = await Note.find({author: req.user._id, $text: {$search: query}})
-        if(note.length === 0){
-            return res.status(200).json({message: "Not results found"})
+        let note = await Note.find({ author: req.user._id, $text: { $search: query } })
+        if (note.length === 0) {
+            return res.status(200).json({ message: "Not results found" })
         }
         return res.status(200).json(note);
     } catch (error) {
@@ -83,8 +83,15 @@ router.put("/:id", withAuth, async (req, res) => {
     const { title, body } = req.body;
     const id = req.params.id
     try {
-        await Note.findByIdAndUpdate(id, { title, body });
-        return res.status(200).json({ message: "Note updated with success" });
+
+        if (title) {
+            await Note.findByIdAndUpdate(id, { title });
+            return res.status(200).json({ message: "Note updated with success" });
+        } else if (body) {
+            await Note.findByIdAndUpdate(id, { body });
+            return res.status(200).json({ message: "Note updated with success" });
+        }
+
     } catch (error) {
         return res.status(400).json({
             message: "Failed update the note",
