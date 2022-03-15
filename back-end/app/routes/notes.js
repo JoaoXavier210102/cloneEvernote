@@ -27,12 +27,12 @@ router.post("/create", withAuth, async (req, res) => {
 router.get("/search", withAuth, async (req, res) => {
 
     const { query } = req.query;
-
+    
     try {
         let note = await Note.find({ author: req.user._id, $text: { $search: query } })
-        if (note.length === 0) {
-            return res.status(200).json({ message: "Not results found" })
-        }
+        // if (note.length === 0) {
+        //     return res.status(200).json({ message: "Not results found" })
+        // }
         return res.status(200).json(note);
     } catch (error) {
         return res.status(400).json({
