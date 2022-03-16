@@ -138,10 +138,18 @@ router.put("/profile/email", withAuth, async (req, res) => {
 
   const {email} = req.body;
 
+  const secret = process.env.SECRET;
+
   try {
 
-    await findByIdAndUpdate(req.user._id, {email});
-    return res.status(200).json({message: "Email updated with success", email});
+    if(await User.findOne({email})){
+      return res.status(400).json({message: "Email already used"})
+    }
+
+    const token = jwt.sign({ email }, secret, { expiresIn: 86400 });
+
+    await User.findByIdAndUpdate(req.user._id, {email});
+    return res.status(200).json({message: "Email updated with success", email, token});
 
   } catch (error) {
     return res.status(400).json({
@@ -157,10 +165,18 @@ router.put("/profile", withAuth, async (req, res) => {
 
   const { name, email } = req.body;
 
+  const secret = process.env.SECRET;
+
   try {
 
+    if(await User.findOne({email})){
+      return res.status(400).json({message: "Email already used"})
+    }
+
+    const token = jwt.sign({ email }, secret, { expiresIn: 86400 });
+
     await User.findByIdAndUpdate(req.user._id, { name, email });
-    return res.status(200).json({ message: "Name updated with success", name, email });
+    return res.status(200).json({ message: "Name updated with success", name, email, token });
 
   } catch (error) {
     return res.status(400).json({

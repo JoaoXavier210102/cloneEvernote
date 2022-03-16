@@ -2,13 +2,13 @@ import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import api from "../../services/api";
 import Swal from "sweetalert2";
-import ReactQuill, { Quill } from "react-quill";
+import ReactQuill from "react-quill";
 import 'react-quill/dist/quill.snow.css';
 
 
 //Icons
 import { CgProfile, CgMenuGridR } from "react-icons/cg";
-import { MdLogout, MdSave } from "react-icons/md";
+import { MdLogout } from "react-icons/md";
 import { IoAddCircle } from "react-icons/io5";
 
 //Components
@@ -179,23 +179,23 @@ const App = () => {
     return (
         <>
             <Main style={{ background: "white" }}>
-                <FadeIn>
+                <FadeIn duration="0.5s">
                     <Header position="relative" style={{ background: "linear-gradient(116.42deg, #3C1642 23.33%, #086375 83.22%)" }}>
                         <Saving active={saving} />
                         <CgMenuGridR size={30} color="white" onClick={handleSideBar} style={{ position: "absolute", left: "20px", cursor: "pointer" }} />
-                        <Link to="/">
+                        <Link to="/app">
                             <img src={logo} alt="logo" />
                         </Link>
                         <Container display="flex" alignItems="center">
                             <Subtittle size={20} weight={400}>{user.name}</Subtittle>
-                            <Link to="#">
+                            <Link to="/edit">
                                 <CgProfile size={50} color="white" style={{ marginLeft: "10px" }} />
                             </Link>
                             <MdLogout size={30} color="white" style={{ marginLeft: "30px", cursor: "pointer" }} onClick={logout} />
                         </Container>
                     </Header>
                 </FadeIn>
-                <FadeIn>
+                <FadeIn duration="0.5s">
                     <Container style={{ width: "500px", display: "grid", transition: "1s", position: "fixed", left: openMenu ? "0px" : "-500px", background: "linear-gradient(0deg, rgba(8,99,117,1) 0%, rgba(60,22,66,1) 100%)" }}>
                         <Container fullWidth display="flex" justify="center" style={{ marginBottom: "60px" }}>
                             <Search result={(result) => result.length === 0 ? setReload(!reload) : setNotes(result)}/>

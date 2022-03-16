@@ -6,6 +6,7 @@ const Container = styled.div`
     justify-content: ${props => props.justify};
     width: ${props => props.fullWidth && "100%"};
     height: ${props => props.height};
+    flex-direction: ${props => props.direction};
     flex-wrap: wrap;
 `
 
